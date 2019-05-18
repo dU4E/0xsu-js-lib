@@ -1,10 +1,9 @@
 const Web3 = require('web3')
 
 class Du4e {
-  const contractAddr = "0x5fc4c5ba2e1d22191fb239a1afe513f7ff892c9c"
 
   constructor(providerURL){
-    //this.providerURL = providerURL
+    const contractAddr = "0x5fc4c5ba2e1d22191fb239a1afe513f7ff892c9c"
     this.web3 = new Web3(Web3.givenProvider || providerURL)
     this.contract = new web3.eth.Contract(this.abi(), contractAddr)
   }
