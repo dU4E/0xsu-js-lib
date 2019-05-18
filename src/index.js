@@ -180,10 +180,26 @@ class Du4e {
 
   async listOfUrls(acct){
     let account = acct || web3.eth.accounts[0]
-    alert(account)
-    let contract = this.contract.at(this.contractAddr)
-    const urls = contract.shortenedURLs(account).call()
+    const urls = []
+    if (this.web3.version.api.startsWith("0")) {
+      let url = await this.contract.shortenedURLs(account, 0)
+      let i = 1
+      while (url){
+        url = await this.contract.shortenedURLs(account, i)
+        urls.push(url)
+        i += 1
+      }
+    } else {
+      let url = await this.contract.shortenedURLs(account, 0).call()
+      let i  = 1
+      while (url){
+        url = await this.contract.shortenedURLs(account, i).call()
+        urls.push(url)
+        i += 1
+      }
+    }
     console.log(urls)
+    return urls
   }
 
   async forward(slug){
