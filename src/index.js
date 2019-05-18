@@ -1,10 +1,22 @@
 const Web3 = require('web3')
 
 class Du4e {
+  constructor(){
+    this.checkForWeb3 = this.checkForWeb3.bind(this)
+    this.checkForWeb3(providerURL)
+  }
 
-  constructor(providerURL){
+  checkForWeb3(){
+    if (window.web3 && web3.currentProvider) {
+      this.initialize()
+      return
+    }
+    window.setTimeout(this.checkForWeb3, 100)
+  }
+
+  initialize(){
     const contractAddr = "0x5fc4c5ba2e1d22191fb239a1afe513f7ff892c9c"
-    this.web3 = new Web3(Web3.givenProvider || providerURL)
+    this.web3 = new Web3(Web3.givenProvider)
     this.contract = new this.web3.eth.Contract(this.abi(), contractAddr)
   }
 
@@ -155,8 +167,10 @@ class Du4e {
     return destination
   }
 
-  listOfUrls(acct){
-
+  async listOfUrls(acct){
+    let account = acct || web3.eth.accounts[0]
+    const urls = await this.contract.methods.shortenedURLs(account).call()
+    console.log(urls)
   }
 
   async forward(slug){
