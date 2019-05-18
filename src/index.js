@@ -3,7 +3,7 @@ const Web3 = require('web3')
 class Du4e {
   constructor(){
     this.checkForWeb3 = this.checkForWeb3.bind(this)
-    this.checkForWeb3(providerURL)
+    this.checkForWeb3()
   }
 
   checkForWeb3(){
