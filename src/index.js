@@ -5,6 +5,7 @@ class Du4e {
     this.checkForWeb3 = this.checkForWeb3.bind(this)
     this.grabShortened = this.grabShortened.bind(this)
     this.addUrl = this.addUrl.bind(this)
+    this.urlCreated = this.urlCreated.bind(this)
     this.checkForWeb3()
   }
 
@@ -14,7 +15,6 @@ class Du4e {
       return
     }
     window.setTimeout(this.checkForWeb3, 100)
-
   }
 
   initialize(){
@@ -180,8 +180,25 @@ class Du4e {
     }
   }
 
-  async shortenUrl(url, slug) {
+  urlCreated(x, y){
+    console.log("x", x)
+    console.log("y", y)
+  }
 
+  async shortenUrl(url, opts={}) {
+    let { slug, acct, cb } = opts
+    let account = acct || web3.eth.accounts[0]
+    let tx = { from: account }
+
+    if (this.web3.version.api.startsWith("0")) {
+      slug ? 
+        this.contract.shortenURLWithSlug.sendTransaction(url, slug, true, tx, this.urlCreated) :
+        this.contract.shortenURL.sendTransaction(url, true, tx, this.urlCreated)
+    } else {
+      slug ? 
+        this.contract.methods.shortenURLWithSlug(url, slug, true).send(tx, this.urlCreated) :
+        this.contract.shortenURL(url, true).send(tx, this.urlCreated)
+    }
   }
 
   async getUrl(slug, cb){
