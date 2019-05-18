@@ -16,8 +16,9 @@ class Du4e {
 
   initialize(){
     const contractAddr = "0x5fc4c5ba2e1d22191fb239a1afe513f7ff892c9c"
-    this.web3 = new Web3(Web3.givenProvider)
+    this.web3 = window.web3 || new Web3(Web3.givenProvider)
     this.contract = new this.web3.eth.Contract(this.abi(), contractAddr)
+
   }
 
   abi() {
