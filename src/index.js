@@ -152,6 +152,7 @@ class Du4e {
 
   async getUrl(slug){
     const destination = await this.contract.methods.getURL(slug).call()
+    return destination
   }
 
   listOfUrls(acct){
