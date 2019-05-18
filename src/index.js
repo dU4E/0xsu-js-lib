@@ -20,9 +20,9 @@ class Du4e {
       this.contractAddr = "0x5fc4c5ba2e1d22191fb239a1afe513f7ff892c9c"
       this.web3 = window.web3 || new Web3(Web3.givenProvider)
       if (this.web3.version.api.startsWith("0")){
-        this.contract = this.web3.eth.contract(this.abi()).at(contractAddr)
+        this.contract = this.web3.eth.contract(this.abi()).at(this.contractAddr)
       } else {
-        this.contract = new this.web3.eth.Contract(this.abi(), contractAddr)
+        this.contract = new this.web3.eth.Contract(this.abi(), this.contractAddr)
       }
     })
   }
