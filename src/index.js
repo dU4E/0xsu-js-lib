@@ -9,6 +9,7 @@ class Du4e {
     this.checkForWeb3()
   }
 
+
   checkForWeb3(){
     if (window.web3 && web3.currentProvider && window.ethereum) {
       this.initialize()
@@ -191,11 +192,11 @@ class Du4e {
     let tx = { from: account }
 
     if (this.web3.version.api.startsWith("0")) {
-      slug ? 
+      slug ?
         this.contract.shortenURLWithSlug.sendTransaction(url, slug, true, tx, this.urlCreated) :
         this.contract.shortenURL.sendTransaction(url, true, tx, this.urlCreated)
     } else {
-      slug ? 
+      slug ?
         this.contract.methods.shortenURLWithSlug(url, slug, true).send(tx, this.urlCreated) :
         this.contract.shortenURL(url, true).send(tx, this.urlCreated)
     }
