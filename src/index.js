@@ -4,7 +4,7 @@ class Du4e {
   constructor(){
     this.checkForWeb3 = this.checkForWeb3.bind(this)
     this.grabShortened = this.grabShortened.bind(this)
-    this.addURL = this.addURL.bind(this)
+    this.addUrl = this.addUrl.bind(this)
     this.checkForWeb3()
   }
 
@@ -167,7 +167,20 @@ class Du4e {
     ]
   }
 
-  shortenUrl(url, slug){
+  grabShortened(acct, index = 0, cb, urls) {
+    this.contract.shortenedURLs(acct, index, (x, short) => {
+      this.addUrl(short, urls, acct, index + 1)
+    })
+  }
+
+  addUrl(short, urls, acct, index) {
+    if (short) {
+      urls.push(short)
+      this.grabShortened(acct, index, this.addUrl, urls)
+    }
+  }
+
+  async shortenUrl(url, slug) {
 
   }
 
@@ -179,21 +192,6 @@ class Du4e {
       const destination = await this.contract.methods.getURL(slug).call()
     }
     return destination
-  }
-
-  grabShortened(acct, index=0, cb, urls){
-    this.contract.shortenedURLs(acct, index, (x, short) => {
-      this.addURL(short, urls, acct, index+1)
-    })
-  }
-
-  addUrl(short, urls, acct, index) {
-    if(short){
-      urls.push(short)
-      this.grabShortened(acct, index, this.addUrl, urls)
-    } else {
-
-    }
   }
 
   async listOfUrls(acct){
