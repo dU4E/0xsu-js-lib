@@ -7,18 +7,20 @@ class Du4e {
   }
 
   checkForWeb3(){
-    if (window.web3 && web3.currentProvider) {
+    if (window.web3 && web3.currentProvider && window.ethereum) {
       this.initialize()
       return
     }
     window.setTimeout(this.checkForWeb3, 100)
+
   }
 
   initialize(){
-    this.contractAddr = "0x5fc4c5ba2e1d22191fb239a1afe513f7ff892c9c"
-    this.web3 = window.web3 || new Web3(Web3.givenProvider)
-    this.contract = new this.web3.eth.contract(this.abi())
-
+    ethereum.enable().then(() => {
+      this.contractAddr = "0x5fc4c5ba2e1d22191fb239a1afe513f7ff892c9c"
+      this.web3 = window.web3 || new Web3(Web3.givenProvider)
+      this.contract = new this.web3.eth.contract(this.abi())
+    })
   }
 
   abi() {
