@@ -1,0 +1,22 @@
+{
+  "name": "@jonbiro/0xsu-js-lib",
+  "version": "1.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dU4E/du4e-js-lib.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dU4E/du4e-js-lib/issues"
+  },
+  "homepage": "https://github.com/dU4E/du4e-js-lib#readme",
+  "dependencies": {
+    "web3": "^1.0.0-beta.55"
+  }
+}
