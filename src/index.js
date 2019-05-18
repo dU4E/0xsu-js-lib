@@ -169,26 +169,36 @@ class Du4e {
 
   }
 
-  async getUrl(slug){
+  async getUrl(slug, cb){
     if (this.web3.version.api.startsWith("0")) {
-      const destination = await this.contract.getURL.call(slug)
+      this.contract.getURL.call(slug, cb)
+      return
     } else {
       const destination = await this.contract.methods.getURL(slug).call()
     }
     return destination
   }
 
+  grabShortened(acct, index=0, cb, urls){
+    this.contract.shortenedURLs(acct, index, (x, short) => {
+      this.addURL.bind(this)(short, urls, acct, index+1)
+    })
+  }
+
+  addUrl(short, urls, acct, index) {
+    if(short){
+      urls.push(short)
+      this.grabShortened(acct, index, this.addUrl, urls)
+    } else {
+      console.log('no url to add')
+    }
+  }
+
   async listOfUrls(acct){
     let account = acct || web3.eth.accounts[0]
     const urls = []
     if (this.web3.version.api.startsWith("0")) {
-      let url = await this.contract.shortenedURLs(account, 0)
-      let i = 1
-      while (url){
-        url = await this.contract.shortenedURLs(account, i)
-        urls.push(url)
-        i += 1
-      }
+      this.grabShortened(account, 0, this.addUrl, urls)
     } else {
       let url = await this.contract.shortenedURLs(account, 0).call()
       let i  = 1
