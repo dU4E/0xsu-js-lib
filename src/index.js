@@ -170,7 +170,7 @@ class Du4e {
 
   async listOfUrls(acct){
     let account = acct || web3.eth.accounts[0]
-    const urls = await this.contract.methods.shortenedURLs(account).call()
+    const urls = await this.contract.shortenedURLs(account).call()
     console.log(urls)
   }
 
