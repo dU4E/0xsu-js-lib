@@ -3,6 +3,8 @@ const Web3 = require('web3')
 class Du4e {
   constructor(){
     this.checkForWeb3 = this.checkForWeb3.bind(this)
+    this.grabShortened = this.grabShortened.bind(this)
+    this.addURL = this.addURL.bind(this)
     this.checkForWeb3()
   }
 
@@ -181,7 +183,7 @@ class Du4e {
 
   grabShortened(acct, index=0, cb, urls){
     this.contract.shortenedURLs(acct, index, (x, short) => {
-      this.addURL.bind(this)(short, urls, acct, index+1)
+      this.addURL(short, urls, acct, index+1)
     })
   }
 
@@ -190,7 +192,7 @@ class Du4e {
       urls.push(short)
       this.grabShortened(acct, index, this.addUrl, urls)
     } else {
-      console.log('no url to add')
+
     }
   }
 
@@ -208,7 +210,7 @@ class Du4e {
         i += 1
       }
     }
-    console.log(urls)
+
     return urls
   }
 
