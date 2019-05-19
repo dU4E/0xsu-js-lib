@@ -237,7 +237,7 @@ class Du4e {
   }
 
   async listOfUrls(acct, cb) {
-    let account = acct && typeof(account) == 'string' || web3.eth.accounts[0];
+    let account = acct && typeof(acct) == 'string' || web3.eth.accounts[0];
     const urls = [];
     if (this.web3.version.api.startsWith("0")) {
       let callback = typeof(acct) == 'function' ? acct : cb
