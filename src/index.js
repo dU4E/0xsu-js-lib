@@ -208,7 +208,7 @@ class Du4e {
   async getUrl(slug, cb){
     if (this.web3.version.api.startsWith("0")) {
       this.contract.getURL.call(slug, cb)
-      return
+      return true
     } else {
       const destination = await this.contract.methods.getURL(slug).call()
     }
