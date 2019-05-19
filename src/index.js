@@ -185,6 +185,7 @@ class Du4e {
       urls.push(short);
       this.grabShortened(acct, index, this.addUrl, urls, devCb);
     } else {
+      console.log("urls", urls)
       devCb(urls)
     }
   }
