@@ -31,6 +31,7 @@ class Du4e {
   }
 
   abi() {
+    // correct ABI thanks Vitalik
     return [
       {
         constant: false,
