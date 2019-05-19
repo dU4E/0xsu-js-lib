@@ -202,11 +202,12 @@ class Du4e {
     let { slug, acct, cb } = opts;
     let account = acct || web3.eth.accounts[0];
     let tx = { from: account };
-    let event = this.contract.URLShortened({}, { address: account })
-    // watch for changes
-    event.watch(this.onURLShortened)
 
     if (this.web3.version.api.startsWith("0")) {
+      let event = this.contract.URLShortened({}, { address: account })
+      // watch for changes
+      event.watch(this.onURLShortened)
+
       slug
         ? this.contract.shortenURLWithSlug.sendTransaction(
             url,
