@@ -7,6 +7,7 @@ class Du4e {
     this.addUrl = this.addUrl.bind(this);
     this.urlCreated = this.urlCreated.bind(this);
     this.onTxSend = null;
+    this.onURLShortened = null;
     this.checkForWeb3();
   }
 
@@ -201,6 +202,9 @@ class Du4e {
     let { slug, acct, cb } = opts;
     let account = acct || web3.eth.accounts[0];
     let tx = { from: account };
+    let event = this.contract.URLShortened({}, { address: account })
+    // watch for changes
+    event.watch(this.onURLShortened)
 
     if (this.web3.version.api.startsWith("0")) {
       slug
