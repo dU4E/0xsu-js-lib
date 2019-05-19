@@ -10,7 +10,6 @@ class Du4e {
     this.checkForWeb3()
   }
 
-
   checkForWeb3(){
     if (window.web3 && web3.currentProvider && window.ethereum) {
       this.initialize()
