@@ -205,7 +205,7 @@ class Du4e {
 
     if (this.web3.version.api.startsWith("0")) {
       let event = this.contract.URLShortened({}, { address: account })
-      // watch for changes
+      // watch for url shortening
       event.watch(this.onURLShortened)
 
       slug
