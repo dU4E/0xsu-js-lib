@@ -6,6 +6,7 @@ class Du4e {
     this.grabShortened = this.grabShortened.bind(this)
     this.addUrl = this.addUrl.bind(this)
     this.urlCreated = this.urlCreated.bind(this)
+    this.onTxSend = null
     this.checkForWeb3()
   }
 
@@ -182,9 +183,11 @@ class Du4e {
     }
   }
 
-  urlCreated(x, y){
-    console.log("x", x)
-    console.log("y", y)
+  urlCreated(x, txId){
+    let event = new Event("urlCreated")
+    if(this.onTxSend){
+      this.onTxSend(txId)
+    }
   }
 
   async shortenUrl(url, opts={}) {
