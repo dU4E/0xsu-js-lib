@@ -2,7 +2,7 @@
 
 Finally, the thing you've been waiting for your entire adult life. Decentralized URL shortener. It's like `goo.gl` except it can't be taken down. It's hosted on [QuikNode](https://quiknode.io/) and integrated with [Wyre](https://www.sendwyre.com/). This is the JS client you can use for integration with your web3 front-end.
 
-Install: `npm install @jonbiro/0xsu-js-lib --save`
+**Install:** `npm install @jonbiro/0xsu-js-lib --save`
 
 Here's how it works:
 
