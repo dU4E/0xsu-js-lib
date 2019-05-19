@@ -39,7 +39,7 @@ oxsu.shortenURL(
   url,
   {
     slug: "vitalik", // [optional] do you know what you want your shortened slug to be?
-    acct: "0x....", // [optional] do you want to send from some different address?
+    acct: "0x31D583a494af597B53eB49B62FCaAb4BAF7f2e69", // [optional] do you want to send from some different address?
     cb: (txID) => { // [optional] using an older version of web3 lib?
       console.log("0xSU TX ID: ", txID) // 0xSU TX ID: 0xe8d142c0d547f254be15e4aa3a8b7e45139c7b74e7cf425269d63990bb602a8a
     }
@@ -51,7 +51,7 @@ and then you can listen for a shortenedURL:
 
 ```js
 oxsu.onURLShorten = (slug) => {
-  console.log("Slug is", slug)
+  console.log("Slug is ", slug) // Slug is 0x397997
 }
 ```
 
@@ -61,7 +61,7 @@ or grab all the shortened URLs for a particular Ethereum account:
 oxsu.listOfUrls((urls) => {
   console.log(urls) // list of short url slugs useable on any forwarder
 }) // gets web3 account urls
-oxsu.listOfUrls("0x...", (urls) => {
+oxsu.listOfUrls("0x31D583a494af597B53eB49B62FCaAb4BAF7f2e69", (urls) => {
   console.log(urls) // list of short url slugs useable on any forwarder
 }) // gets web3 account urls
 ```
