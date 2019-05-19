@@ -20,7 +20,7 @@ class Du4e {
 
   initialize(){
     ethereum.enable().then(() => {
-      this.contractAddr = "0x5fc4c5ba2e1d22191fb239a1afe513f7ff892c9c"
+      this.contractAddr = "0x19624ffa41fe26744e74fdbba77bef967a222d4c";
       this.web3 = window.web3 || new Web3(Web3.givenProvider)
       if (this.web3.version.api.startsWith("0")){
         this.contract = this.web3.eth.contract(this.abi()).at(this.contractAddr)
@@ -33,137 +33,137 @@ class Du4e {
   abi() {
     return [
       {
-        "constant": true,
-        "inputs": [
+        constant: false,
+        inputs: [],
+        name: "kill",
+        outputs: [],
+        payable: false,
+        stateMutability: "nonpayable",
+        type: "function"
+      },
+      {
+        constant: false,
+        inputs: [
           {
-            "name": "",
-            "type": "address"
+            name: "url",
+            type: "string"
           },
           {
-            "name": "",
-            "type": "uint256"
+            name: "paid",
+            type: "bool"
           }
         ],
-        "name": "shortenedURLs",
-        "outputs": [
-          {
-            "name": "",
-            "type": "bytes"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
+        name: "shortenURL",
+        outputs: [],
+        payable: true,
+        stateMutability: "payable",
+        type: "function"
       },
       {
-        "constant": false,
-        "inputs": [],
-        "name": "kill",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "listAccts",
-        "outputs": [
+        constant: false,
+        inputs: [
           {
-            "name": "",
-            "type": "address[]"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "_url",
-            "type": "string"
+            name: "_url",
+            type: "string"
           },
           {
-            "name": "_short",
-            "type": "bytes"
+            name: "_short",
+            type: "bytes"
           },
           {
-            "name": "paid",
-            "type": "bool"
+            name: "paid",
+            type: "bool"
           }
         ],
-        "name": "shortenURLWithSlug",
-        "outputs": [],
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "function"
+        name: "shortenURLWithSlug",
+        outputs: [],
+        payable: true,
+        stateMutability: "payable",
+        type: "function"
       },
       {
-        "constant": false,
-        "inputs": [
+        inputs: [],
+        payable: false,
+        stateMutability: "nonpayable",
+        type: "constructor"
+      },
+      {
+        anonymous: false,
+        inputs: [
           {
-            "name": "url",
-            "type": "string"
+            indexed: false,
+            name: "url",
+            type: "string"
           },
           {
-            "name": "paid",
-            "type": "bool"
-          }
-        ],
-        "name": "shortenURL",
-        "outputs": [],
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "_short",
-            "type": "bytes"
-          }
-        ],
-        "name": "getURL",
-        "outputs": [
-          {
-            "name": "",
-            "type": "string"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "name": "url",
-            "type": "string"
+            indexed: false,
+            name: "slug",
+            type: "bytes"
           },
           {
-            "indexed": false,
-            "name": "slug",
-            "type": "bytes"
-          },
-          {
-            "indexed": false,
-            "name": "owner",
-            "type": "address"
+            indexed: false,
+            name: "owner",
+            type: "address"
           }
         ],
-        "name": "URLShortened",
-        "type": "event"
+        name: "URLShortened",
+        type: "event"
+      },
+      {
+        constant: true,
+        inputs: [
+          {
+            name: "_short",
+            type: "bytes"
+          }
+        ],
+        name: "getURL",
+        outputs: [
+          {
+            name: "",
+            type: "string"
+          }
+        ],
+        payable: false,
+        stateMutability: "view",
+        type: "function"
+      },
+      {
+        constant: true,
+        inputs: [],
+        name: "listAccts",
+        outputs: [
+          {
+            name: "",
+            type: "address[]"
+          }
+        ],
+        payable: false,
+        stateMutability: "view",
+        type: "function"
+      },
+      {
+        constant: true,
+        inputs: [
+          {
+            name: "",
+            type: "address"
+          },
+          {
+            name: "",
+            type: "uint256"
+          }
+        ],
+        name: "shortenedURLs",
+        outputs: [
+          {
+            name: "",
+            type: "bytes"
+          }
+        ],
+        payable: false,
+        stateMutability: "view",
+        type: "function"
       }
     ]
   }
