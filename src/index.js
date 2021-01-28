@@ -200,7 +200,8 @@ class Du4e {
 
   async shortenUrl(url, opts = {}) {
     let { slug, acct, cb } = opts;
-    let account = acct || web3.eth.accounts[0];
+    let accounts = await ethereum.request({ method: 'eth_accounts' });
+    let account = acct || accounts[0];
     let tx = { from: account };
 
     if (this.web3.version.api.startsWith("0")) {
@@ -242,7 +243,8 @@ class Du4e {
   }
 
   async listOfUrls(acct, cb) {
-    let account = acct && typeof(acct) == 'string' || web3.eth.accounts[0];
+    let accounts = await ethereum.request({ method: 'eth_accounts' });
+    let account = acct && typeof(acct) == 'string' || accounts[0];
     const urls = [];
     if (this.web3.version.api.startsWith("0")) {
       let callback = typeof(acct) == 'function' ? acct : cb
