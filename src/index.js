@@ -21,18 +21,13 @@ class Du4e {
 
   initialize() {
     ethereum.enable().then(() => {
-      this.contractAddr = "0x19624ffa41fe26744e74fdbba77bef967a222d4c";
-      this.web3 = window.web3 || new Web3(Web3.givenProvider);
-      if (this.web3.version.api.startsWith("0")) {
-        this.contract = this.web3.eth
-          .contract(this.abi())
-          .at(this.contractAddr);
-      } else {
-        this.contract = new this.web3.eth.Contract(
-          this.abi(),
-          this.contractAddr
-        );
-      }
+      this.contractAddr = "0x5b56438000bac5ed2c6e0c1ecff4354abffaf889";
+      this.web3 = new Web3(window.ethereum);
+      window.ethereum.enable();
+      this.contract = new this.web3.eth.Contract(
+        this.abi(),
+        this.contractAddr
+      );
     });
   }
 
@@ -176,7 +171,7 @@ class Du4e {
   }
 
   grabShortened(acct, index = 0, cb, urls, devCb) {
-    this.contract.shortenedURLs(acct, index, (x, short) => {
+    this.contract.methods.shortenedURLs(acct, index, (x, short) => {
       this.addUrl(short, urls, acct, index + 1, devCb);
     });
   }
@@ -200,64 +195,44 @@ class Du4e {
 
   async shortenUrl(url, opts = {}) {
     let { slug, acct, cb } = opts;
-    let account = acct || web3.eth.accounts[0];
+    let accounts = await ethereum.request({ method: 'eth_accounts' });
+    let account = acct || accounts[0];
     let tx = { from: account };
-
-    if (this.web3.version.api.startsWith("0")) {
-      let event = this.contract.URLShortened({}, { address: account })
-      // watch for url shortening :)
-      event.watch(this.onURLShortened)
-
-      slug
-        ? this.contract.shortenURLWithSlug.sendTransaction(
-            url,
-            slug,
-            true,
-            tx,
-            this.urlCreated
-          )
-        : this.contract.shortenURL.sendTransaction(
-            url,
-            true,
-            tx,
-            this.urlCreated
-          );
-    } else {
-      slug
-        ? this.contract.methods
-            .shortenURLWithSlug(url, slug, true)
-            .send(tx, this.urlCreated)
-        : this.contract.shortenURL(url, true).send(tx, this.urlCreated);
-    }
+    
+    // watch for url shortening :)
+    this.contract.events.URLShortened({ address: account }, this.onURLShortened)
+  
+    slug
+      ? this.contract.methods
+          .shortenURLWithSlug(url, slug, true)
+          .send(tx, this.urlCreated)
+      : this.contract.methods.shortenURL(url, true).send(tx, this.urlCreated);
   }
 
   async getUrl(slug, cb) {
-    if (this.web3.version.api.startsWith("0")) {
-      this.contract.getURL.call(slug, cb);
-      return true;
-    } else {
-      const destination = await this.contract.methods.getURL(slug).call();
-    }
+    const destination = await this.contract.methods.getURL(slug).call();
     return destination;
   }
 
   async listOfUrls(acct, cb) {
-    let account = acct && typeof(acct) == 'string' || web3.eth.accounts[0];
+    let accounts = await ethereum.request({ method: 'eth_accounts' });
+    let account = typeof(acct) == 'string' && acct || accounts[0];
+    let callback = typeof(acct) == 'function' ? acct : cb;
     const urls = [];
-    if (this.web3.version.api.startsWith("0")) {
-      let callback = typeof(acct) == 'function' ? acct : cb
-      this.grabShortened(account, 0, this.addUrl, urls, callback);
-    } else {
-      let url = await this.contract.shortenedURLs(account, 0).call();
-      let i = 1;
-      while (url) {
-        url = await this.contract.shortenedURLs(account, i).call();
+    let url = await this.contract.methods.shortenedURLs(account, 0).call();
+
+    let i = 1;
+    while (url) {
+      try {
+        url = await this.contract.methods.shortenedURLs(account, i).call();
         urls.push(url);
         i += 1;
+      } catch (e) {
+        url = null;
       }
     }
 
-    return urls;
+    callback(urls);
   }
 
   async forward(slug) {
